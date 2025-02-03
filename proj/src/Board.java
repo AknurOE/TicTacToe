@@ -1,13 +1,13 @@
 // боард класс для инкапсуляции поля
 class Board {
-    private final char[][] grid; // массив чтоб храненить состояние поля
+    private final char[][] grid; // массив для хранения состояния поля
     private static final int SIZE = 3;
 
     public Board() {
-        grid = new char[SIZE][SIZE]; // создаю массив
+        grid = new char[SIZE][SIZE];
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                grid[i][j] = '-'; // который изначально ячейки пустые
+                grid[i][j] = '-'; // ячейки пустые
             }
         }
     }
@@ -21,14 +21,12 @@ class Board {
     }
 
     public boolean checkWin(char symbol) {
-        // проверить роус и колумнс
         for (int i = 0; i < SIZE; i++) {
             if ((grid[i][0] == symbol && grid[i][1] == symbol && grid[i][2] == symbol) ||
                     (grid[0][i] == symbol && grid[1][i] == symbol && grid[2][i] == symbol)) {
                 return true;
             }
         }
-        // проверка диагоналей
         return (grid[0][0] == symbol && grid[1][1] == symbol && grid[2][2] == symbol) ||
                 (grid[0][2] == symbol && grid[1][1] == symbol && grid[2][0] == symbol);
     }
@@ -44,12 +42,27 @@ class Board {
         return true;
     }
 
+    public char getCell(int row, int col) {
+        return grid[row][col];
+    }
+
+    // Объединенный метод для отображения заголовка и игрового поля с рамками
     public void display() {
-        for (char[] row : grid) {
-            for (char cell : row) {
-                System.out.print(cell + " ");
+        // Выводим заголовок игры
+        System.out.println("\n=================================");
+        System.out.println("      TIC-TAC-TOE GAME");
+        System.out.println("=================================\n");
+
+        // Выводим игровое поле с рамками
+        System.out.println("  +---+---+---+"); // Верхняя граница
+        for (int i = 0; i < SIZE; i++) {
+            System.out.print("  | ");
+            for (int j = 0; j < SIZE; j++) {
+                char symbol = getCell(i, j);
+                // Выводим символы с пробелами, а не цветами
+                System.out.print((symbol == 'X' ? "X" : symbol == 'O' ? "O" : " ") + " | ");
             }
-            System.out.println();
+            System.out.println("\n  +---+---+---+"); // Горизонтальная граница между строками
         }
     }
 }

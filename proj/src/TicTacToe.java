@@ -1,6 +1,6 @@
 public class TicTacToe {
     public static void main(String[] args) {
-        GameController gameController = new GameController();
-        gameController.startGame();  // запуск игры
+        // Запускаем главное меню, которое будет управлять выбором режима игры
+        MainMenu.main(args);  // вызов главного меню, которое запускает игру
     }
 }

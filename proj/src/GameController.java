@@ -5,10 +5,16 @@ class GameController {
     private final Player playerX;
     private final Player playerO;
 
-    public GameController() {
+    // Добавляем параметр, чтобы создавать игроков в зависимости от выбора
+    public GameController(boolean isPlayerVsPlayer) {
         board = new Board();
-        playerX = new HumanPlayer('X');
-        playerO = new AIPlayer('O');
+        if (isPlayerVsPlayer) {
+            playerX = new HumanPlayer('X');  // Игрок за X
+            playerO = new HumanPlayer('O');  // Игрок за O
+        } else {
+            playerX = new HumanPlayer('X');  // Игрок за X
+            playerO = new AIPlayer('O');  // Компьютер за O
+        }
     }
 
     private void saveGameResult(char winner) {
@@ -39,12 +45,12 @@ class GameController {
             if (board.checkWin(currentPlayer.getSymbol())) {
                 board.display();
                 System.out.println("Player " + currentPlayer.getSymbol() + " wins!");
-                saveGameResult(currentPlayer.getSymbol()); // сохранение резов
+                saveGameResult(currentPlayer.getSymbol()); // сохранение результата
                 gameActive = false;
             } else if (board.isFull()) {
                 board.display();
                 System.out.println("It's a draw!");
-                saveGameResult('-'); // сохранение рез ничья
+                saveGameResult('-'); // сохранение результата ничьей
                 gameActive = false;
             }
 
@@ -52,5 +58,3 @@ class GameController {
         }
     }
 }
-
-
