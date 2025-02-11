@@ -17,13 +17,13 @@ public class MainMenu {
             int choice = scanner.nextInt();
             switch (choice) {
                 case 1:
-                    new GameController(true).startGame();  // Игрок vs Игрок
+                    new GameController(new HumanPlayer('X'), new HumanPlayer('O')).startGame();
                     break;
                 case 2:
-                    new GameController(false).startGame();  // Игрок vs Компьютер
+                    new GameController(new HumanPlayer('X'), new AIPlayer('O')).startGame();
                     break;
                 case 3:
-                    showWinnerList();  // Отображение списка победителей
+                    showWinnerList();
                     break;
                 case 4:
                     exit = true;
@@ -35,7 +35,6 @@ public class MainMenu {
         }
         scanner.close();
     }
-
     private static void showWinnerList() {
         String url = "jdbc:postgresql://localhost:5432/tictactoe";
         String username = "postgres";

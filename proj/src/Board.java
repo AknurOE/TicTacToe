@@ -46,23 +46,22 @@ class Board {
         return grid[row][col];
     }
 
-    // Объединенный метод для отображения заголовка и игрового поля с рамками
+
     public void display() {
-        // Выводим заголовок игры
+
         System.out.println("\n=================================");
         System.out.println("      TIC-TAC-TOE GAME");
         System.out.println("=================================\n");
 
-        // Выводим игровое поле с рамками
-        System.out.println("  +---+---+---+"); // Верхняя граница
+        System.out.println("  +---+---+---+");
         for (int i = 0; i < SIZE; i++) {
             System.out.print("  | ");
             for (int j = 0; j < SIZE; j++) {
                 char symbol = getCell(i, j);
-                // Выводим символы с пробелами, а не цветами
+
                 System.out.print((symbol == 'X' ? "X" : symbol == 'O' ? "O" : " ") + " | ");
             }
-            System.out.println("\n  +---+---+---+"); // Горизонтальная граница между строками
+            System.out.println("\n  +---+---+---+");
         }
     }
 }

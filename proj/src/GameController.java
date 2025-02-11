@@ -5,31 +5,28 @@ class GameController {
     private final Player playerX;
     private final Player playerO;
 
-    // Добавляем параметр, чтобы создавать игроков в зависимости от выбора
-    public GameController(boolean isPlayerVsPlayer) {
-        board = new Board();
-        if (isPlayerVsPlayer) {
-            playerX = new HumanPlayer('X');  // Игрок за X
-            playerO = new HumanPlayer('O');  // Игрок за O
-        } else {
-            playerX = new HumanPlayer('X');  // Игрок за X
-            playerO = new AIPlayer('O');  // Компьютер за O
-        }
+    public GameController(Player playerX, Player playerO) {  // Внедрение зависимостей
+        this.board = new Board();
+        this.playerX = playerX;
+        this.playerO = playerO;
     }
 
     private void saveGameResult(char winner) {
-        String url = "jdbc:postgresql://localhost:5432/tictactoe";
-        String username = "postgres";
-        String password = "akonchik";
+        Connection connection = DatabaseManager.getInstance().getConnection();
+        if (connection == null) {
+            System.out.println("Ошибка: нет подключения к базе данных.");
+            return;
+        }
 
-        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+        try {
             String query = "INSERT INTO games (winner) VALUES (?)";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, winner == '-' ? "Draw" : String.valueOf(winner));
             statement.executeUpdate();
-            System.out.println("Game result saved to database.");
+            System.out.println("Результат игры сохранён в базе данных.");
         } catch (SQLException e) {
-            System.err.println("Database error: " + e.getMessage());
+            System.out.println("Ошибка при сохранении результата.");
+            e.printStackTrace();
         }
     }
 
